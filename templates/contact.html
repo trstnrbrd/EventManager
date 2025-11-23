@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}
+EventHub - Contact
+{% endblock %}
+
+{% block content %}
+<!-- Contact Section -->
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  /></head
+><style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+  body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #b6d7b9;
+  }
+  h1{
+      font-family: "Montserrat", sans-serif;
+  }
+
+  li:hover{
+    color: #9b9c62;
+    font-size: larger;
+  }
+</style>
+<body>
+  <div
+    class="contact-section"
+    style="
+      background-color: #9abd97;
+      padding: 50px 0;
+      text-align: center;
+      border-radius: 10px;
+    "
+  >
+    <div class="container">
+      <!-- Contact Header -->
+      <h1 style="font-weight: 600; color: #483d03">Contact Me</h1>
+      <p
+          font-size: 18px;
+          color: #555;
+          margin-top: 20px;
+        "
+      >
+        Got questions, feedback, or just want to say hi? I'd love to hear from
+        you!
+      </p>
+      <p style="font-size: 18px; color: #555">
+        You can reach me through the following channels:
+      </p>
+
+      <!-- Contact Links -->
+      <ul
+        style="
+          list-style-type: none;
+          margin-left: 40%;
+          padding: 0;
+          text-align: left;
+          font-size: 2rem;
+          color: #483d03;
+          line-height: 1.8;
+        "
+      >
+        <li class="fa fa-github">
+          <a
+
+            href="https://github.com/trstnrbrd"
+            target="_blank"
+            style="color: #483d03; text-decoration: none"
+            >trstnrbrd</a
+          >
+        </li>
+        <br>
+        <li class="fa fa-linkedin-square">
+          <a
+            href="https://www.linkedin.com/in/tristan-reboredo-952305354/"
+            target="_blank"
+            style="color: #483d03; text-decoration: none"
+            >Tristan Reboredo</a
+          >
+        </li>
+      </ul>
+
+      <p style="font-size: 18px; color: #000000; margin-top: 30px">
+        Or drop your message directly below:
+      </p>
+
+      <!-- Contact Form -->
+      <form
+        method="post"
+        action="{% url 'contact' %}"
+        style="
+          max-width: 600px;
+          margin: auto;
+          background-color: #ffffff;
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        "
+      >
+        {% csrf_token %}
+        <div class="form-group">
+
+          <textarea
+            name="message"
+            rows="5"
+            style="
+              width: 100%;
+              padding: 15px;
+              border-radius: 8px;
+              border: 1px solid #ddd;
+              margin-bottom: 20px;
+            "
+            placeholder="Write your message here..."
+            required
+          ></textarea
+          ><br />
+          <input
+            type="email"
+            name="email"
+            style="
+              width: 100%;
+              padding: 15px;
+              border-radius: 8px;
+              border: 1px solid #ddd;
+              margin-bottom: 20px;
+            "
+            placeholder="Your Email Address"
+            required
+          ><br />
+        </div>
+        <button
+          type="submit"
+          style="
+            padding: 12px 25px;
+            background-color: #646536;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 18px;
+          "
+        >
+          Send
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Social Media Links -->
+ <div
+    style="
+      background-color: #646536;
+      padding: 40px 0;
+      text-align: center;
+      color: white;
+      border-radius: 10px;
+      margin-top: 50px;
+    "
+  >
+    <h2>Follow Me</h2>
+    <p
+      style="
+        font-size: 18px;
+        margin-top: 20px;
+      "
+    >
+      Stay connected on social media:
+    </p>
+
+    <div style="margin-top: 30px">
+      <a
+        href="https://www.reddit.com/user/tristhawn/"
+        target="_blank"
+        style="margin: 0 15px"
+      >
+        <img
+          src="https://img.icons8.com/ios-glyphs/30/ffffff/reddit.png"
+          alt="Reddit"
+        />
+      </a>
+      <a
+        href="https://www.instagram.com/tristanrbrd/"
+        target="_blank"
+        style="margin: 0 15px"
+      >
+        <img
+          src="https://img.icons8.com/ios-glyphs/30/ffffff/instagram.png"
+          alt="Instagram"
+        />
+      </a>
+    </div>
+  </div>
+</body>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+EventHub - Events
+{% endblock %}
+
+{% block content %}
+<!-- Title Section -->
+{% block styles %}
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+  /* General Styling */
+  body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #f4f7fc; /* Updated background color for a more professional look */
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Title Section */
+  .events-header {
+    background-color: #646536; /* Primary color for the header */
+    color: white;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    color: #D0F1BF;
+    font-size: 48px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 18px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  /* Card Styling */
+  .container{
+  padding:1rem;
+  }
+  .card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 0; /* Ensure no margin at the bottom of the card */
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-body {
+    padding: 30px;
+    background-color: #ffffff; /* White background for card body */
+    border-radius: 0 0 15px 15px;
+  }
+
+  .card-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #3d1360; /* Primary color for card title */
+  }
+
+  .card-text {
+    color: #555; /* Darker text color for better readability */
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 15px;
+  }
+
+  .btn-primary {
+    background-color: #250b08; /* Accent color for buttons */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #483d03; /* Change to primary color on hover */
+  }
+
+  /* Responsive Grid */
+  .container {
+    margin-top: 50px;
+  }
+   .row.no-gutters {
+    margin-left: 0; /* Remove left margin */
+    margin-right: 0; /* Remove right margin */
+  }
+
+  .col-md-4 {
+    padding-left: 0; /* Remove left padding */
+    padding-right: 0; /* Remove right padding */
+  }
+
+
+</style>
+{% endblock %}
+
+<body>
+<div class="events-header text-center py-5">
+    <h2>Upcoming Events</h2>
+    <p style="font-size: 18px;">Explore a variety of events in your community</p>
+</div>
+
+<!-- Events Grid -->
+<div class="container">
+    <div class="row">
+        {% for i in eve %}
+        <div class="col-md-4 mb-4">
+            <div class="card text-center shadow-lg" style="border-radius: 15px; overflow: hidden; transition: transform 0.3s ease;">
+                <img src="{{i.img.url}}" class="card-img-top" alt="Event Image" height="200px" width="100%" style="object-fit: cover;">
+                <div class="card-body" style="background-color: var(--secondary-color); padding: 30px;">
+                    <h5 class="card-title" style="font-family: 'Roboto', sans-serif; color: var(--primary-color); font-size: 22px; font-weight: 600;">{{i.name}}</h5>
+                    <p class="card-text" style="font-family: 'Open Sans', sans-serif; color: var(--text-color); font-size: 16px; font-weight: 300; margin-bottom: 15px;">{{i.desc}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+
+{% endblock %}
+

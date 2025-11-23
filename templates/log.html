@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/stylelog.css' %}">
+    <meta name="author" content="Tristan Reboredo" />
+    <meta name="description" content="Event Manager project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login EventHub</title>
+</head>
+<style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Color Palette */
+        :root {
+            --primary-color: #3d1360;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --background-color: #f4f7fc;
+        }
+
+        /* Title */
+        .login-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .input-box label {
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .input-box input {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        /* Button Styling */
+        .submit-btn input {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn input:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Error Messages */
+        .error-messages {
+            margin-top: 20px;
+            color: var(--accent-color);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Responsive Styling */
+        @media screen and (max-width: 768px) {
+            .login-container {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .login-title {
+                font-size: 28px;
+            }
+
+            .input-box input {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .submit-btn input {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <div class="login-title">Login</div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="input-container">
+                    <div class="input-box">
+                        <label for="username">User Name:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                </div>
+                <div class="submit-btn">
+                    <input type="submit" name="submit" value="Login">
+                </div>
+            </form>
+            <div class="error-messages">
+                {% for message in messages %}
+                <script>
+                    alert('{{message}}');
+                </script>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+EventHub - Dashboard
+{% endblock %}
+
+{% block content %}
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+  /* General Styling */
+  body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #b6d7b9;
+    color: #646536;
+  }
+
+  section {
+    padding: 50px 0;
+  }
+
+  h2,
+  h3 {
+    color: #646536;
+    font-weight: bold;
+  }
+
+  /* Color Palette */
+  :root {
+    --primary-color: #483d03;
+    --secondary-color: #646536;
+    --accent-color: #250b08;
+    --text-color: #333;
+  }
+
+  /* General Section Styling */
+  section {
+    background-color: #d0f1bf;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+
+  /* Carousel Section */
+  #myCarousel {
+    margin-bottom: 40px;
+    border:double 8px #483d03;
+  }
+
+  .carousel-inner img {
+    height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  /* Introduction Section */
+  .intro-section h2 {
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+
+  .intro-section p {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  /* Upcoming Events Section */
+  .upcoming-events .event-card {
+    margin-bottom: 30px;
+    background-color: #9abd97;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .upcoming-events .event-card img {
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .upcoming-events .event-card h3 {
+    font-size: 24px;
+    margin-top: 10px;
+    color: #483d03;
+  }
+
+  .upcoming-events .btn {
+    margin-top: 15px;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .upcoming-events .btn:hover {
+    background-color: var(--secondary-color);
+  }
+
+  .upcoming-events .event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Call to Action Section */
+  .cta-section {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 50px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .cta-section h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+  }
+
+  .cta-section p {
+    font-size: 18px;
+    margin-bottom: 25px;
+  }
+
+  .cta-section .btn {
+    font-size: 18px;
+    padding: 12px 30px;
+    background-color: #2ecc71;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+
+  .cta-section .btn:hover {
+    background-color: #27ae60;
+  }
+
+  /* Username Section */
+  .username-section {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 24px;
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  /* Testimonials Section */
+  .testimonials-section p {
+    font-style: italic;
+    color: #555;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 767px) {
+    .intro-section h2 {
+      font-size: 28px;
+    }
+
+    .intro-section p {
+      font-size: 16px;
+    }
+
+    .upcoming-events .event-card {
+      margin-bottom: 20px;
+    }
+
+    .cta-section h2 {
+      font-size: 28px;
+    }
+
+    .cta-section p {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<!-- Carousel Section -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="{% static 'image/upcoming.jpg' %}" alt="Event 1" width="100%">
+        </div>
+        <div class="item">
+            <img src="{% static 'image/halowen.jpg' %}" alt="Event 2" width="100%">
+        </div>
+        <div class="item">
+            <img src="{% static 'image/wedding.jpg' %}" alt="Event 3" width="100%">
+        </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<!-- Introduction Section -->
+<section class="intro-section">
+    <div class="container text-center">
+        <h2>Welcome to Community Event Manager</h2>
+        <p>Discover, manage, and engage with exciting events right here! Whether it's a local gathering or a concert, we provide everything you need to stay connected.</p>
+    </div>
+</section>
+
+<!-- Upcoming Events Section -->
+<section class="upcoming-events">
+    <div class="container text-center">
+        <h2>Upcoming Events</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="{% static 'image/egg.png' %}" alt="Event 1" class="img-fluid">
+                    <h3>Easter Egg Hunt</h3>
+                    <p>Get ready for the most exciting Easter Egg hunt yet! This year, we're bringing you a thrilling event filled with surprises, challenges, and of course, hidden treasures. Whether you're a seasoned egg hunter or a first-time participant, there's something for everyone.</p>
+                    <a href="#" class="btn">View Details</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="{% static 'image/eventimg.jpg' %}" alt="Event 2" class="img-fluid">
+                    <h3>Night Concert</h3>
+                    <p>Experience the magic of live music under the stars! Join us for an unforgettable night concert featuring amazing performances, vibrant lights, and an electric atmosphere. Grab your friends, feel the rhythm, and let the night come alive with music!</p>
+                    <a href="#" class="btn">View Details</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="event-card">
+                    <img src="{% static 'image/christmas.jpg' %}" alt="Event 3" class="img-fluid">
+                    <h3>Christmas Party</h3>
+                    <p>Join us for a festive Christmas celebration filled with holiday cheer, music, games, and delicious food! Connect with your neighbors, spread some holiday spirit, and create lasting memories at this fun-filled community event. Don’t miss out on the magic of the season!</p>
+                    <a href="#" class="btn">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section text-center">
+    <div class="container">
+        <h2>Ready to join an event?</h2>
+        <p>Sign up today and get access to all our upcoming events!</p>
+        <a href="{% url 'register' %}" class="btn">Create another account</a>
+    </div>
+</section>
+
+<!-- Username Section (Centered) -->
+<div class="username-section">
+    <p>Welcome, {{ user.username }}!</p>
+</div>
+
+{% endblock %}
