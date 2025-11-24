@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Events
+{% endblock %}
+
+{% block content %}
+<!-- Title Section -->
+<div class="events-header text-center py-5">
+    <h2>Upcoming Events</h2>
+    <p style="font-size: 18px; color: #888;">Explore a variety of events in your community</p>
+</div>
+
+<!-- Events Grid -->
+<div class="container">
+    <div class="row">
+        {% for i in eve %}
+        <div class="col-md-4 mb-4">
+            <div class="card text-center shadow-lg" style="border-radius: 15px; overflow: hidden; transition: transform 0.3s ease;">
+                <img src="{{i.img.url}}" class="card-img-top" alt="Event Image" height="200px" width="100%" style="object-fit: cover;">
+                <div class="card-body" style="background-color: var(--secondary-color); padding: 30px;">
+                    <h5 class="card-title" style="font-family: 'Roboto', sans-serif; color: var(--primary-color); font-size: 22px; font-weight: 600;">{{i.name}}</h5>
+                    <p class="card-text" style="font-family: 'Open Sans', sans-serif; color: var(--text-color); font-size: 16px; font-weight: 300; margin-bottom: 15px;">{{i.desc}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    /* General Styling */
+    body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Title Section */
+    .events-header {
+        background-color: var(--primary-color);
+        color: white;
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+
+    h2 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 48px;
+        font-weight: bold;
+    }
+
+    p {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 18px;
+        color: #fff;
+        font-weight: 400;
+    }
+
+    /* Card Styling */
+    .card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 30px;
+        background-color: var(--secondary-color);
+        border-radius: 0 0 15px 15px;
+    }
+
+    .card-title {
+        font-family: 'Roboto', sans-serif;
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .card-text {
+        font-family: 'Open Sans', sans-serif;
+        color: var(--text-color);
+        font-size: 16px;
+        font-weight: 300;
+        margin-bottom: 15px;
+    }
+
+    .btn-primary {
+        background-color: var(--accent-color);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--primary-color);
+    }
+
+    /* Custom Colors */
+    :root {
+        --primary-color: #3d1360;
+        --secondary-color: #2ecc71;
+        --accent-color: #250b08;
+        --text-color: #333;
+        --background-color: #f4f7fc;
+    }
+
+    /* Responsive Grid */
+    .container {
+        margin-top: 50px;
+    }
+
+    .col-md-4 {
+        margin-bottom: 30px;
+    }
+</style>
+{% endblock %}

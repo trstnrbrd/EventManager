@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Contact
+{% endblock %}
+
+{% block content %}
+<!-- Contact Section -->
+<div class="contact-section" style="background-color: #f1faee; padding: 50px 0; text-align: center; border-radius: 10px;">
+    <div class="container">
+        <!-- Contact Header -->
+        <h1 style="font-family: 'Roboto', sans-serif; font-weight: 600; color: #3d1360;">Contact Me</h1>
+        <p style="font-family: 'Open Sans', sans-serif; font-size: 18px; color: #555; margin-top: 20px;">
+            Got questions, feedback, or just want to say hi? I'd love to hear from you!
+        </p>
+        <p style="font-family: 'Open Sans', sans-serif; font-size: 18px; color: #555;">
+            You can reach me through the following channels:
+        </p>
+
+        <!-- Contact Links -->
+        <ul style="list-style-type: none; padding: 0; text-align: left; font-family: 'Open Sans', sans-serif; font-size: 16px; color: #3d1360; line-height: 1.8;">
+            <li>💻 GitHub: <a href="https://github.com/switzza" target="_blank" style="color: #3d1360; text-decoration: none;">github.com/switzza</a></li>
+            <li>🐯 Reddit: <a href="https://www.reddit.com/user/tristhawn/" target="_blank" style="color: #3d1360; text-decoration: none;">u/tristhawn</a></li>
+        </ul>
+
+        <p style="font-family: 'Open Sans', sans-serif; font-size: 18px; color: #555; margin-top: 30px;">
+            Or drop your message directly below:
+        </p>
+
+        <!-- Contact Form -->
+        <form method="post" action="{% url 'contact' %}" style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea name="message" rows="5" style="width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;" placeholder="Write your message here..." required></textarea><br>
+                <input type="email" name="email" style="width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;" placeholder="Your Email Address" required><br>
+            </div>
+            <button type="submit" style="padding: 12px 25px; background-color: #3d1360; color: white; border: none; cursor: pointer; border-radius: 8px; font-size: 18px;">Send</button>
+        </form>
+    </div>
+</div>
+
+<!-- Social Media Links -->
+<div style="background-color: #3d1360; padding: 40px 0; text-align: center; color: white; border-radius: 10px; margin-top: 50px;">
+    <h2 style="font-family: 'Roboto', sans-serif; font-weight: 600;">Follow Me</h2>
+    <p style="font-family: 'Open Sans', sans-serif; font-size: 18px; margin-top: 20px;">Stay connected on social media:</p>
+
+    <div style="margin-top: 30px;">
+        <a href="https://github.com/switzza" target="_blank" style="margin: 0 15px;">
+            <img src="https://img.icons8.com/ios-glyphs/30/ffffff/github.png" alt="GitHub">
+        </a>
+        <a href="https://www.instagram.com/tristanrbrd/" target="_blank" style="margin: 0 15px;">
+            <img src="https://img.icons8.com/ios-glyphs/30/ffffff/instagram.png" alt="Instagram">
+        </a>
+    </div>
+</div>
+
+{% endblock %}

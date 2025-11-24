@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+About
+{% endblock %}
+
+{% block content %}
+<!-- Google Font Link -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+    /* General Styling */
+    body {
+        font-family: 'Roboto', sans-serif; /* Applying Roboto font */
+        background-color: #f4f7fc;
+        color: #333;
+    }
+
+    .about-section {
+        text-align: center;
+        padding: 40px 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .about-section h1 {
+        color: var(--primary-color);
+        font-size: 36px;
+        margin-bottom: 20px;
+        font-weight: 700; /* Bold title */
+    }
+
+    .about-section p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: var(--text-color);
+        font-weight: 400; /* Normal weight for paragraphs */
+    }
+
+    .about-section strong {
+        color: var(--primary-color);
+        font-weight: 500; /* Medium weight for strong text */
+    }
+
+    .about-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .about-section ul li {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: var(--text-color);
+        font-weight: 400; /* Normal weight for list items */
+    }
+
+    .about-section ul li strong {
+        color: var(--primary-color);
+        font-weight: 500; /* Medium weight for strong text in list */
+    }
+
+    /* Color Palette */
+    :root {
+        --primary-color: #3d1360;
+        --secondary-color: #2ecc71;
+        --accent-color: #250b08;
+        --text-color: #333;
+        --background-color: #f4f7fc;
+    }
+</style>
+
+<div class="about-section">
+    <h1>About</h1>
+    <p>Welcome to <strong>Community Event Manager</strong> – your ultimate platform for connecting with your community and organizing unforgettable events!</p>
+    <p>
+        Our mission is to simplify event management and participation by providing an easy-to-use platform where users can:
+    </p>
+    <ul>
+        <li>✔ <strong>Create Events:</strong> Plan and host events effortlessly, whether it's a workshop, meetup, or celebration.</li>
+        <li>✔ <strong>Discover Events:</strong> Explore a variety of community happenings that seek your interests.</li>
+        <li>✔ <strong>Connect with Others:</strong> Build meaningful connections with like-minded individuals in your community.</li>
+    </ul>
+    <p>
+        We believe in fostering community spirit and making event planning accessible to everyone. Whether you’re an event organizer or an enthusiastic attendee, our platform is here to make your experience seamless and enjoyable.
+    </p>
+    <p>Start exploring and connecting today!</p>
+</div>
+
+<div class="about-section">
+    <h1>About This Project</h1>
+    <p><strong>Community Event Manager</strong>! This platform is the result of countless hours of coding, debugging, and brainstorming by just – me.</p>
+    <p>
+        I created this app to make event management and discovery simple and accessible for communities. Whether you're planning a meetup or looking for something fun nearby, this app has got you covered!
+    </p>
+    <p>
+        As a student, I’m constantly working to improve and add new features, so if you spot anything that could be better, let me know. Thanks for stopping by, and I hope this project makes managing your events enjoyable!
+    </p>
+    <p>Happy organizing!</p>
+</div>
+
+{% endblock %}
