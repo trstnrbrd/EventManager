@@ -1,132 +1,119 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}
-Events
+{% block title %}Events — EventHub{% endblock %}
+
+{% block extra_head %}
+<style>
+  .ev-grid-card { cursor: pointer; }
+
+  .ev-grid-img-wrap { overflow: hidden; height: 230px; }
+
+  .ev-grid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s var(--ease);
+    display: block;
+  }
+
+  .ev-grid-card:hover .ev-grid-img { transform: scale(1.06); }
+
+  .ev-grid-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+  }
+
+  .ev-grid-tag {
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+
+  .ev-grid-title {
+    font-size: .98rem;
+    font-weight: 600;
+    color: var(--c-ink);
+    line-height: 1.35;
+  }
+
+  .ev-grid-desc {
+    font-size: .83rem;
+    color: var(--c-ink-3);
+    line-height: 1.55;
+    flex: 1;
+    padding-bottom: .75rem;
+  }
+
+  .empty-wrap {
+    text-align: center;
+    padding: 6rem 1rem;
+  }
+
+  .empty-icon {
+    font-size: 3.5rem;
+    color: #d1d5db;
+    margin-bottom: 1rem;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-<!-- Title Section -->
-<div class="events-header text-center py-5">
-    <h2>Upcoming Events</h2>
-    <p style="font-size: 18px; color: #888;">Explore a variety of events in your community</p>
+
+<div class="page-banner">
+  <div class="container">
+    <span class="eyebrow">All Events</span>
+    <h1>Events Gallery</h1>
+    <p>Browse and discover the latest events. Every listing is one click away from a reservation.</p>
+  </div>
 </div>
 
-<!-- Events Grid -->
-<div class="container">
-    <div class="row">
-        {% for i in eve %}
-        <div class="col-md-4 mb-4">
-            <div class="card text-center shadow-lg" style="border-radius: 15px; overflow: hidden; transition: transform 0.3s ease;">
-                <img src="{{i.img.url}}" class="card-img-top" alt="Event Image" height="200px" width="100%" style="object-fit: cover;">
-                <div class="card-body" style="background-color: var(--secondary-color); padding: 30px;">
-                    <h5 class="card-title" style="font-family: 'Roboto', sans-serif; color: var(--primary-color); font-size: 22px; font-weight: 600;">{{i.name}}</h5>
-                    <p class="card-text" style="font-family: 'Open Sans', sans-serif; color: var(--text-color); font-size: 16px; font-weight: 300; margin-bottom: 15px;">{{i.desc}}</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+<section class="section" style="padding-top:2.5rem;">
+  <div class="container">
+
+    {% if eve %}
+    <div class="d-flex align-items-center justify-content-between mb-4" data-fade>
+      <span style="font-size:.83rem;color:var(--c-ink-3);">
+        {{ eve|length }} event{{ eve|length|pluralize }} available
+      </span>
+      <a href="{% url 'booking' %}" class="btn btn-primary btn-sm">
+        <i class="bi bi-ticket-perforated"></i> Book an Event
+      </a>
     </div>
-</div>
 
-{% endblock %}
+    <div class="row g-4">
+      {% for event in eve %}
+      <div class="col-sm-6 col-lg-4" data-fade data-delay="{{ forloop.counter }}">
+        <div class="card ev-grid-card h-100">
+          <div class="ev-grid-img-wrap">
+            <img class="ev-grid-img" src="{{ event.img.url }}" alt="{{ event.name }}">
+          </div>
+          <div class="ev-grid-body">
+            <div class="ev-grid-tag"><i class="bi bi-calendar-event me-1"></i>Event</div>
+            <div class="ev-grid-title">{{ event.name }}</div>
+            <div class="ev-grid-desc">{{ event.desc }}</div>
+            <a href="{% url 'booking' %}" class="btn btn-primary btn-sm">Reserve Now</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
 
-{% block styles %}
-<style>
-    /* General Styling */
-    body {
-        font-family: 'Open Sans', sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-color);
-        margin: 0;
-        padding: 0;
-    }
+    {% else %}
+    <div class="empty-wrap" data-fade>
+      <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+      <h4 style="font-weight:600;margin-bottom:.4rem;">No events yet</h4>
+      <p style="color:var(--c-ink-3);max-width:320px;margin:.3rem auto 1.5rem;font-size:.9rem;">
+        Events will appear here once added by the admin. Check back soon.
+      </p>
+      <a href="{% url 'index' %}" class="btn btn-ghost">Back to Home</a>
+    </div>
+    {% endif %}
 
-    /* Title Section */
-    .events-header {
-        background-color: var(--primary-color);
-        color: white;
-        padding-top: 60px;
-        padding-bottom: 40px;
-    }
+  </div>
+</section>
 
-    h2 {
-        font-family: 'Roboto', sans-serif;
-        font-size: 48px;
-        font-weight: bold;
-    }
-
-    p {
-        font-family: 'Open Sans', sans-serif;
-        font-size: 18px;
-        color: #fff;
-        font-weight: 400;
-    }
-
-    /* Card Styling */
-    .card {
-        border: none;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .card-body {
-        padding: 30px;
-        background-color: var(--secondary-color);
-        border-radius: 0 0 15px 15px;
-    }
-
-    .card-title {
-        font-family: 'Roboto', sans-serif;
-        font-size: 22px;
-        font-weight: 600;
-        color: var(--primary-color);
-    }
-
-    .card-text {
-        font-family: 'Open Sans', sans-serif;
-        color: var(--text-color);
-        font-size: 16px;
-        font-weight: 300;
-        margin-bottom: 15px;
-    }
-
-    .btn-primary {
-        background-color: var(--accent-color);
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 16px;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-        background-color: var(--primary-color);
-    }
-
-    /* Custom Colors */
-    :root {
-        --primary-color: #3d1360;
-        --secondary-color: #2ecc71;
-        --accent-color: #250b08;
-        --text-color: #333;
-        --background-color: #f4f7fc;
-    }
-
-    /* Responsive Grid */
-    .container {
-        margin-top: 50px;
-    }
-
-    .col-md-4 {
-        margin-bottom: 30px;
-    }
-</style>
 {% endblock %}

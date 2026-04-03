@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Booking Confirmed — EventHub{% endblock %}
+
+{% block extra_head %}
+<style>
+  .success-shell {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+  }
+
+  .success-card {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .success-icon {
+    width: 72px; height: 72px;
+    background: #f0fdf4;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    color: #16a34a;
+    margin: 0 auto 1.5rem;
+  }
+
+  .booking-detail {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .85rem 1.25rem;
+    border-bottom: 1px solid var(--c-border);
+    font-size: .875rem;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-key { color: var(--c-ink-3); font-weight: 500; }
+  .detail-val { color: var(--c-ink); font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-shell">
+  <div class="success-card" data-fade>
+    <div class="card" style="padding:2.5rem;text-align:center;">
+
+      <div class="success-icon">
+        <i class="bi bi-check-lg"></i>
+      </div>
+
+      <h2 style="font-size:1.7rem;margin-bottom:.4rem;">Booking Confirmed</h2>
+      <p style="color:var(--c-ink-3);font-size:.9rem;margin-bottom:0;">
+        Your reservation has been saved. See you at the event!
+      </p>
+
+      {% if booking %}
+      <div class="booking-detail">
+        <div class="detail-row">
+          <span class="detail-key">Name</span>
+          <span class="detail-val">{{ booking.cus_name }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Phone</span>
+          <span class="detail-val">{{ booking.cus_ph }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Event</span>
+          <span class="detail-val">{{ booking.name }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-key">Date</span>
+          <span class="detail-val">{{ booking.booking_date }}</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem;">
+        <a href="{% url 'events' %}" class="btn btn-primary">Browse More Events</a>
+        <a href="{% url 'index' %}" class="btn btn-ghost">Back to Home</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,103 +1,171 @@
 {% extends 'base.html' %}
+{% block title %}About — EventHub{% endblock %}
 
-{% block title %}
-About
+{% block extra_head %}
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media(max-width:768px) { .about-grid { grid-template-columns: 1fr; } }
+
+  .about-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: rgba(0,0,0,.04);
+    line-height: 1;
+    margin-bottom: .25rem;
+  }
+
+  .tech-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .75rem;
+    font-weight: 500;
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: 99px;
+    padding: .28rem .75rem;
+    color: var(--c-ink-2);
+    margin: .2rem;
+  }
+
+  .value-card {
+    padding: 1.75rem;
+    border-radius: var(--r-md);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .value-card:hover { box-shadow: var(--sh-md); transform: translateY(-3px); }
+
+  .value-icon {
+    font-size: 1.4rem;
+    margin-bottom: .85rem;
+  }
+
+  .dev-card {
+    background: var(--c-ink);
+    border-radius: var(--r-lg);
+    padding: 3rem 2rem;
+    text-align: center;
+    color: rgba(255,255,255,.55);
+  }
+
+  .dev-avatar {
+    width: 72px; height: 72px;
+    background: var(--c-accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: #fff;
+    margin: 0 auto 1rem;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-<!-- Google Font Link -->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
-<style>
-    /* General Styling */
-    body {
-        font-family: 'Roboto', sans-serif; /* Applying Roboto font */
-        background-color: #f4f7fc;
-        color: #333;
-    }
-
-    .about-section {
-        text-align: center;
-        padding: 40px 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
-
-    .about-section h1 {
-        color: var(--primary-color);
-        font-size: 36px;
-        margin-bottom: 20px;
-        font-weight: 700; /* Bold title */
-    }
-
-    .about-section p {
-        font-size: 18px;
-        line-height: 1.6;
-        color: var(--text-color);
-        font-weight: 400; /* Normal weight for paragraphs */
-    }
-
-    .about-section strong {
-        color: var(--primary-color);
-        font-weight: 500; /* Medium weight for strong text */
-    }
-
-    .about-section ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .about-section ul li {
-        font-size: 18px;
-        margin-bottom: 10px;
-        color: var(--text-color);
-        font-weight: 400; /* Normal weight for list items */
-    }
-
-    .about-section ul li strong {
-        color: var(--primary-color);
-        font-weight: 500; /* Medium weight for strong text in list */
-    }
-
-    /* Color Palette */
-    :root {
-        --primary-color: #3d1360;
-        --secondary-color: #2ecc71;
-        --accent-color: #250b08;
-        --text-color: #333;
-        --background-color: #f4f7fc;
-    }
-</style>
-
-<div class="about-section">
-    <h1>About</h1>
-    <p>Welcome to <strong>Community Event Manager</strong> – your ultimate platform for connecting with your community and organizing unforgettable events!</p>
-    <p>
-        Our mission is to simplify event management and participation by providing an easy-to-use platform where users can:
-    </p>
-    <ul>
-        <li>✔ <strong>Create Events:</strong> Plan and host events effortlessly, whether it's a workshop, meetup, or celebration.</li>
-        <li>✔ <strong>Discover Events:</strong> Explore a variety of community happenings that seek your interests.</li>
-        <li>✔ <strong>Connect with Others:</strong> Build meaningful connections with like-minded individuals in your community.</li>
-    </ul>
-    <p>
-        We believe in fostering community spirit and making event planning accessible to everyone. Whether you’re an event organizer or an enthusiastic attendee, our platform is here to make your experience seamless and enjoyable.
-    </p>
-    <p>Start exploring and connecting today!</p>
+<div class="page-banner">
+  <div class="container">
+    <span class="eyebrow">About</span>
+    <h1>About EventHub</h1>
+    <p>A user-first platform making event discovery and booking reliable and effortless.</p>
+  </div>
 </div>
 
-<div class="about-section">
-    <h1>About This Project</h1>
-    <p><strong>Community Event Manager</strong>! This platform is the result of countless hours of coding, debugging, and brainstorming by just – me.</p>
-    <p>
-        I created this app to make event management and discovery simple and accessible for communities. Whether you're planning a meetup or looking for something fun nearby, this app has got you covered!
-    </p>
-    <p>
-        As a student, I’m constantly working to improve and add new features, so if you spot anything that could be better, let me know. Thanks for stopping by, and I hope this project makes managing your events enjoyable!
-    </p>
-    <p>Happy organizing!</p>
-</div>
+<section class="section" style="padding-top:2.5rem;">
+  <div class="container">
+
+    <!-- Mission -->
+    <div class="row g-5 align-items-center mb-5">
+      <div class="col-lg-5" data-fade="left">
+        <span class="eyebrow">Mission</span>
+        <h2 class="section-title">We make events accessible.</h2>
+        <p style="color:var(--c-ink-2);line-height:1.8;margin-bottom:1.5rem;font-size:.95rem;">
+          EventHub empowers communities by creating an accessible way to publish, discover, and reserve event participation — with transparency and ease.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:.75rem;">
+          <div style="display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--c-ink-2);">
+            <span style="width:20px;height:20px;background:rgba(92,106,196,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--c-accent);">✓</span>
+            Create and list events instantly
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--c-ink-2);">
+            <span style="width:20px;height:20px;background:rgba(92,106,196,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--c-accent);">✓</span>
+            Browse events by category
+          </div>
+          <div style="display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:var(--c-ink-2);">
+            <span style="width:20px;height:20px;background:rgba(92,106,196,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:var(--c-accent);">✓</span>
+            Book with confidence, track reservations
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-fade="right">
+        <div class="about-grid">
+          <div class="value-card" data-delay="1">
+            <div class="value-icon">👁</div>
+            <h5 style="font-size:.92rem;margin-bottom:.4rem;">Transparency</h5>
+            <p style="font-size:.83rem;color:var(--c-ink-3);line-height:1.6;margin:0;">Clear event info, honest details, no hidden surprises.</p>
+          </div>
+          <div class="value-card" data-delay="2">
+            <div class="value-icon">🤝</div>
+            <h5 style="font-size:.92rem;margin-bottom:.4rem;">Community</h5>
+            <p style="font-size:.83rem;color:var(--c-ink-3);line-height:1.6;margin:0;">Tools that connect people around shared experiences.</p>
+          </div>
+          <div class="value-card" data-delay="3">
+            <div class="value-icon">⚡</div>
+            <h5 style="font-size:.92rem;margin-bottom:.4rem;">Simplicity</h5>
+            <p style="font-size:.83rem;color:var(--c-ink-3);line-height:1.6;margin:0;">Intuitive, fast, easy to use from the very first visit.</p>
+          </div>
+          <div class="value-card" data-delay="4">
+            <div class="value-icon">🔒</div>
+            <h5 style="font-size:.92rem;margin-bottom:.4rem;">Security</h5>
+            <p style="font-size:.83rem;color:var(--c-ink-3);line-height:1.6;margin:0;">Backed by Django's proven authentication and data handling.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider my-5">
+
+    <!-- Project -->
+    <div class="row g-5 align-items-center mb-5">
+      <div class="col-lg-6" data-fade>
+        <span class="eyebrow">Tech Stack</span>
+        <h2 class="section-title">Built with care.</h2>
+        <p style="color:var(--c-ink-2);line-height:1.8;font-size:.95rem;margin-bottom:1.25rem;">
+          A full-stack Django application demonstrating production-quality architecture — authentication, event management, booking workflows, and media handling.
+        </p>
+        <div>
+          <span class="tech-tag"><i class="bi bi-gear-fill" style="color:var(--c-accent);"></i> Django 5.1</span>
+          <span class="tech-tag"><i class="bi bi-bootstrap-fill" style="color:#7952b3;"></i> Bootstrap 5</span>
+          <span class="tech-tag"><i class="bi bi-database-fill" style="color:#10b981;"></i> SQLite3</span>
+          <span class="tech-tag"><i class="bi bi-image" style="color:#f59e0b;"></i> Pillow</span>
+          <span class="tech-tag"><i class="bi bi-person-lock" style="color:var(--c-accent);"></i> Django Auth</span>
+          <span class="tech-tag"><i class="bi bi-code-slash"></i> Python 3.13</span>
+        </div>
+      </div>
+      <div class="col-lg-6" data-fade data-delay="2">
+        <div class="dev-card">
+          <div class="dev-avatar">T</div>
+          <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:.2rem;">Tristan Reboredo</div>
+          <div style="font-size:.83rem;margin-bottom:1.5rem;">Full-Stack Developer — STI College</div>
+          <div style="display:flex;justify-content:center;gap:.75rem;">
+            <a href="https://www.linkedin.com/in/tristan-reboredo-952305354/" target="_blank" class="btn btn-outline-white btn-sm">
+              <i class="bi bi-linkedin"></i> LinkedIn
+            </a>
+            <a href="https://github.com/trstnrbrd" target="_blank" class="btn btn-outline-white btn-sm">
+              <i class="bi bi-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 {% endblock %}

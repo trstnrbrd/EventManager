@@ -1,266 +1,453 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}EventHub — Discover &amp; Book Events{% endblock %}
 
-{% block title %}
-Home
+{% block extra_head %}
+<style>
+  /* ── HERO ── */
+  .hero {
+    background: var(--c-ink);
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: .5;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(92,106,196,.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-glow-2 {
+    position: absolute;
+    bottom: -150px; left: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(128,147,241,.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 1; padding: 5rem 0; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--c-accent-2);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-eyebrow span {
+    width: 24px; height: 1px;
+    background: var(--c-accent-2);
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    color: #fff;
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+    letter-spacing: -.02em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--c-accent-2);
+  }
+
+  .hero-body {
+    font-size: 1rem;
+    color: rgba(255,255,255,.5);
+    max-width: 420px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+  .hero-visual {
+    position: relative;
+    height: 480px;
+  }
+
+  .hero-img-main {
+    position: absolute;
+    top: 0; right: 0;
+    width: 88%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: var(--r-lg);
+    box-shadow: var(--sh-lg);
+  }
+
+  .hero-img-accent {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 52%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: var(--r-md);
+    box-shadow: var(--sh-lg);
+    border: 3px solid var(--c-ink);
+  }
+
+  .hero-stat-card {
+    position: absolute;
+    bottom: 60px; right: 0;
+    background: rgba(255,255,255,.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--r-md);
+    padding: .85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    color: #fff;
+  }
+
+  .hero-stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .hero-stat-label {
+    font-size: .72rem;
+    color: rgba(255,255,255,.5);
+    line-height: 1.4;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: var(--c-accent);
+    padding: .65rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-flex;
+    gap: 2.5rem;
+    animation: marquee 22s linear infinite;
+  }
+
+  .marquee-item {
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.75);
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    flex-shrink: 0;
+  }
+
+  .marquee-dot { width: 4px; height: 4px; background: rgba(255,255,255,.4); border-radius: 50%; }
+
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ── FEATURES ── */
+  .feature-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3rem;
+    color: rgba(0,0,0,.05);
+    line-height: 1;
+    margin-bottom: .5rem;
+  }
+
+  .feature-line {
+    width: 32px; height: 2px;
+    background: var(--c-accent);
+    margin-bottom: 1rem;
+  }
+
+  /* ── EVENT PREVIEW ── */
+  .ev-card { cursor: pointer; }
+
+  .ev-card-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    transition: transform .5s var(--ease);
+  }
+
+  .ev-card:hover .ev-card-img { transform: scale(1.05); }
+
+  .ev-card-body {
+    padding: 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ev-tag {
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: .4rem;
+  }
+
+  .ev-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--c-ink);
+    margin-bottom: .35rem;
+    line-height: 1.35;
+  }
+
+  .ev-desc {
+    font-size: .83rem;
+    color: var(--c-ink-3);
+    flex: 1;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--c-ink);
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(92,106,196,.2) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-<style>
-    /* General Styling */
-    body {
-        font-family: 'Open Sans', sans-serif;
-        background-color: #f4f7fc;
-        color: #333;
-    }
 
-    section {
-        padding: 50px 0;
-    }
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-grain"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
 
-    h2, h3 {
-        color: #2c3e50;
-        font-weight: bold;
-    }
+  <div class="container hero-content">
+    <div class="row align-items-center g-5">
 
-    /* Color Palette */
-    :root {
-        --primary-color: #3d1360;
-        --secondary-color: #2ecc71;
-        --accent-color: #250b08;
-        --text-color: #333;
-        --background-color: #f4f7fc;
-    }
-    
-    /* General Section Styling */
-    section {
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
-
-    /* Carousel Section */
-    #myCarousel {
-        margin-bottom: 40px;
-    }
-
-    .carousel-inner img {
-        height: 450px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-    /* Introduction Section */
-    .intro-section h2 {
-        font-size: 36px;
-        margin-bottom: 15px;
-    }
-
-    .intro-section p {
-        font-size: 18px;
-        line-height: 1.6;
-    }
-
-    /* Upcoming Events Section */
-    .upcoming-events .event-card {
-        margin-bottom: 30px;
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-
-    .upcoming-events .event-card img {
-        max-height: 200px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-    .upcoming-events .event-card h3 {
-        font-size: 24px;
-        margin-top: 10px;
-        color: #2c3e50;
-    }
-
-    .upcoming-events .btn {
-        margin-top: 15px;
-        background-color: var(--primary-color);
-        color: #fff;
-        padding: 12px 25px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
-
-    .upcoming-events .btn:hover {
-        background-color: var(--secondary-color);
-    }
-
-    .upcoming-events .event-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    /* Call to Action Section */
-    .cta-section {
-        background-color: var(--primary-color);
-        color: #fff;
-        padding: 50px 0;
-        border-radius: 10px;
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .cta-section h2 {
-        font-size: 32px;
-        margin-bottom: 15px;
-    }
-
-    .cta-section p {
-        font-size: 18px;
-        margin-bottom: 25px;
-    }
-
-    .cta-section .btn {
-        font-size: 18px;
-        padding: 12px 30px;
-        background-color: #2ecc71;
-        color: #fff;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-
-    .cta-section .btn:hover {
-        background-color: #27ae60;
-    }
-
-    /* Username Section */
-    .username-section {
-        text-align: center;
-        margin-top: 30px;
-        font-size: 24px;
-        color: var(--accent-color);
-        font-weight: bold;
-    }
-
-    /* Testimonials Section */
-    .testimonials-section p {
-        font-style: italic;
-        color: #555;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 767px) {
-        .intro-section h2 {
-            font-size: 28px;
-        }
-
-        .intro-section p {
-            font-size: 16px;
-        }
-
-        .upcoming-events .event-card {
-            margin-bottom: 20px;
-        }
-
-        .cta-section h2 {
-            font-size: 28px;
-        }
-
-        .cta-section p {
-            font-size: 16px;
-        }
-    }
-</style>
-
-<!-- Carousel Section -->
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <img src="{% static 'image/upcoming.jpg' %}" alt="Event 1" width="100%">
+      <div class="col-lg-6">
+        <div class="hero-eyebrow" data-fade>
+          <span></span> Discover &amp; Book Instantly
         </div>
-        <div class="item">
-            <img src="{% static 'image/halowen.jpg' %}" alt="Event 2" width="100%">
+        <h1 class="hero-title" data-fade data-delay="1">
+          Your next great<br><em>event</em> awaits.
+        </h1>
+        <p class="hero-body" data-fade data-delay="2">
+          Browse curated events, reserve your spot in seconds, and never miss what matters most to you.
+        </p>
+        <div class="hero-actions" data-fade data-delay="3">
+          {% if user.is_authenticated %}
+          <a href="{% url 'events' %}" class="btn btn-white btn-lg">Browse Events</a>
+          <a href="{% url 'booking' %}" class="btn btn-outline-white btn-lg">Book Now</a>
+          {% else %}
+          <a href="{% url 'register' %}" class="btn btn-white btn-lg">Get Started Free</a>
+          <a href="{% url 'login' %}" class="btn btn-outline-white btn-lg">Sign In</a>
+          {% endif %}
         </div>
-        <div class="item">
-            <img src="{% static 'image/wedding.jpg' %}" alt="Event 3" width="100%">
+      </div>
+
+      <div class="col-lg-6 d-none d-lg-block" data-fade="right" data-delay="2">
+        <div class="hero-visual">
+          <img class="hero-img-main" src="{% static 'image/eventimg.jpg' %}" alt="Event">
+          <img class="hero-img-accent" src="{% static 'image/christmas.jpg' %}" alt="Community">
+          <div class="hero-stat-card">
+            <div>
+              <div class="hero-stat-num">500+</div>
+              <div class="hero-stat-label">Bookings<br>made</div>
+            </div>
+            <div style="width:1px;height:36px;background:rgba(255,255,255,.12);"></div>
+            <div>
+              <div class="hero-stat-num">50+</div>
+              <div class="hero-stat-label">Events<br>listed</div>
+            </div>
+          </div>
         </div>
+      </div>
+
     </div>
+  </div>
+</section>
 
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <span class="sr-only">Next</span>
-    </a>
+<!-- ── MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    {% for item in "12345678"|make_list %}
+    <span class="marquee-item">Concerts <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Festivals <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Community <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Workshops <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Exhibitions <span class="marquee-dot"></span></span>
+    {% endfor %}
+  </div>
 </div>
 
-<!-- Introduction Section -->
-<section class="intro-section">
-    <div class="container text-center">
-        <h2>Welcome to Community Event Manager</h2>
-        <p>Discover, manage, and engage with exciting events right here! Whether it's a local gathering or a concert, we provide everything you need to stay connected.</p>
+<!-- ── FEATURES ── -->
+<section class="section" style="background:#fff; border-bottom:1px solid var(--c-border);">
+  <div class="container">
+    <div class="row align-items-end mb-5">
+      <div class="col-md-7">
+        <span class="eyebrow" data-fade>Why EventHub</span>
+        <h2 class="section-title" data-fade data-delay="1">Everything you need,<br>nothing you don't.</h2>
+      </div>
+      <div class="col-md-5 text-md-end" data-fade data-delay="2">
+        <p class="section-sub" style="margin-left:auto;">Built for simplicity, speed, and a great experience from first click to final confirmation.</p>
+      </div>
     </div>
+
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-3" data-fade data-delay="1">
+        <div class="feature-num">01</div>
+        <div class="feature-line"></div>
+        <h5 style="margin-bottom:.4rem;font-size:.95rem;">Easy Booking</h5>
+        <p style="font-size:.85rem;color:var(--c-ink-3);line-height:1.6;">Reserve your spot in under a minute with a streamlined, zero-friction flow.</p>
+      </div>
+      <div class="col-sm-6 col-lg-3" data-fade data-delay="2">
+        <div class="feature-num">02</div>
+        <div class="feature-line"></div>
+        <h5 style="margin-bottom:.4rem;font-size:.95rem;">Secure Auth</h5>
+        <p style="font-size:.85rem;color:var(--c-ink-3);line-height:1.6;">Your account and reservations are protected with Django's battle-tested auth.</p>
+      </div>
+      <div class="col-sm-6 col-lg-3" data-fade data-delay="3">
+        <div class="feature-num">03</div>
+        <div class="feature-line"></div>
+        <h5 style="margin-bottom:.4rem;font-size:.95rem;">Curated Events</h5>
+        <p style="font-size:.85rem;color:var(--c-ink-3);line-height:1.6;">Concerts, festivals, meetups and more — hand-picked and listed in one place.</p>
+      </div>
+      <div class="col-sm-6 col-lg-3" data-fade data-delay="4">
+        <div class="feature-num">04</div>
+        <div class="feature-line"></div>
+        <h5 style="margin-bottom:.4rem;font-size:.95rem;">Instant Confirm</h5>
+        <p style="font-size:.85rem;color:var(--c-ink-3);line-height:1.6;">Get a confirmation page immediately — so you're always in the know.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Upcoming Events Section -->
-<section class="upcoming-events">
-    <div class="container text-center">
-        <h2>Upcoming Events</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="event-card">
-                    <img src="{% static 'image/egg.png' %}" alt="Event 1" class="img-fluid">
-                    <h3>Easter Egg Hunt</h3>
-                    <p>Get ready for the most exciting Easter Egg hunt yet! This year, we're bringing you a thrilling event filled with surprises, challenges, and of course, hidden treasures. Whether you're a seasoned egg hunter or a first-time participant, there's something for everyone.</p>
-                    <a href="#" class="btn">View Details</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="event-card">
-                    <img src="{% static 'image/eventimg.jpg' %}" alt="Event 2" class="img-fluid">
-                    <h3>Night Concert</h3>
-                    <p>Experience the magic of live music under the stars! Join us for an unforgettable night concert featuring amazing performances, vibrant lights, and an electric atmosphere. Grab your friends, feel the rhythm, and let the night come alive with music!</p>
-                    <a href="#" class="btn">View Details</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="event-card">
-                    <img src="{% static 'image/christmas.jpg' %}" alt="Event 3" class="img-fluid">
-                    <h3>Christmas Party</h3>
-                    <p>Join us for a festive Christmas celebration filled with holiday cheer, music, games, and delicious food! Connect with your neighbors, spread some holiday spirit, and create lasting memories at this fun-filled community event. Don’t miss out on the magic of the season!</p>
-                    <a href="#" class="btn">View Details</a>
-                </div>
-            </div>
+<!-- ── FEATURED EVENTS ── -->
+<section class="section">
+  <div class="container">
+    <div class="d-flex align-items-end justify-content-between mb-5 flex-wrap gap-3">
+      <div>
+        <span class="eyebrow" data-fade>Highlights</span>
+        <h2 class="section-title mb-0" data-fade data-delay="1">Featured Events</h2>
+      </div>
+      {% if user.is_authenticated %}
+      <a href="{% url 'events' %}" class="btn btn-ghost btn-sm" data-fade data-delay="2">
+        View all <i class="bi bi-arrow-right"></i>
+      </a>
+      {% else %}
+      <a href="{% url 'register' %}" class="btn btn-ghost btn-sm" data-fade data-delay="2">
+        Sign up to view all <i class="bi bi-arrow-right"></i>
+      </a>
+      {% endif %}
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4" data-fade data-delay="1">
+        <div class="card ev-card h-100">
+          <div style="overflow:hidden;">
+            <img class="ev-card-img" src="{% static 'image/upcoming.jpg' %}" alt="Upcoming">
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-tag">Upcoming</div>
+            <div class="ev-title">Featured Events</div>
+            <div class="ev-desc">See the most popular events this month and reserve your seat now.</div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'booking' %}" class="btn btn-primary btn-sm">Reserve Now</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-ghost btn-sm">Login to Book</a>
+            {% endif %}
+          </div>
         </div>
+      </div>
+      <div class="col-md-4" data-fade data-delay="2">
+        <div class="card ev-card h-100">
+          <div style="overflow:hidden;">
+            <img class="ev-card-img" src="{% static 'image/festival.jpg' %}" alt="Festival">
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-tag">Music</div>
+            <div class="ev-title">Live Concerts</div>
+            <div class="ev-desc">Join upcoming music events and be part of an unforgettable experience.</div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'booking' %}" class="btn btn-primary btn-sm">Reserve Now</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-ghost btn-sm">Login to Book</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-fade data-delay="3">
+        <div class="card ev-card h-100">
+          <div style="overflow:hidden;">
+            <img class="ev-card-img" src="{% static 'image/christmas.jpg' %}" alt="Community">
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-tag">Community</div>
+            <div class="ev-title">Community Events</div>
+            <div class="ev-desc">Build stronger connections with local events and gatherings near you.</div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'booking' %}" class="btn btn-primary btn-sm">Reserve Now</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-ghost btn-sm">Login to Book</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- Call to Action Section -->
-<section class="cta-section text-center">
-    <div class="container">
-        <h2>Ready to join an event?</h2>
-        <p>Sign up today and get access to all our upcoming events!</p>
-        <a href="{% url 'login' %}" class="btn">Login</a>
+<!-- ── CTA ── -->
+{% if not user.is_authenticated %}
+<section class="cta-section">
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="eyebrow" style="color:var(--c-accent-2);" data-fade>Join Today</span>
+    <h2 class="cta-title" data-fade data-delay="1">Ready for your next event?</h2>
+    <p style="color:rgba(255,255,255,.45);max-width:400px;margin:.75rem auto 2rem;font-size:.95rem;" data-fade data-delay="2">
+      Create a free account to browse, book, and manage events in one place.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap" data-fade data-delay="3">
+      <a href="{% url 'register' %}" class="btn btn-white btn-lg">Create Free Account</a>
+      <a href="{% url 'login' %}" class="btn btn-outline-white btn-lg">Sign In</a>
     </div>
+  </div>
 </section>
-
-<!-- Username Section (Centered) -->
-<div class="username-section">
-    <p>Welcome, {{ user.username }}!</p>
-</div>
+{% endif %}
 
 {% endblock %}
