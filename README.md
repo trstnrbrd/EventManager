@@ -1,7 +1,7 @@
 # EventHub
 
 A community event booking web application built with Django.  
-Created as a course project by a 2nd year BSIT student.
+Created as a course project by a BSIT student.
 
 🌐 **Live Demo:** [reboredotristan.pythonanywhere.com](https://reboredotristan.pythonanywhere.com)
 
